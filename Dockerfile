@@ -19,27 +19,25 @@ RUN buildDeps="gcc g++ git mercurial make automake autoconf python-dev openssl-d
     libgomp \
 && pip install --upgrade pip --no-cache-dir \
 && pip install -r /requirements.txt --no-cache-dir \
-&& git clone --depth 1 --branch ${PAR2TAG} https://github.com/Parchive/par2cmdline.git \
-&& cd /par2cmdline \
-&& sh automake.sh \
-&& ./configure \
-&& make \
-&& make install \
-&& cd / \
-&& rm -rf par2cmdline \
-&& git clone --depth 1 --branch ${GITTAG} https://github.com/sabnzbd/sabnzbd.git \
-&& hg clone https://bitbucket.org/dual75/yenc \
-&& cd /yenc \
-&& python setup.py build \
-&& python setup.py install \
-&& cd / \
 && chmod +x /start.sh \
-&& rm -rf /yenc \
+&& git clone --depth 1 --branch ${PAR2TAG} https://github.com/Parchive/par2cmdline.git \
+  && cd /par2cmdline \
+  && sh automake.sh \
+  && ./configure \
+  && make \
+  && make install \
+  && cd / \
+  && rm -rf par2cmdline \
+&& hg clone https://bitbucket.org/dual75/yenc \
+  && cd /yenc \
+  && python setup.py build \
+  && python setup.py install \
+  && cd / \
+  && rm -rf /yenc \
+&& git clone --depth 1 --branch ${GITTAG} https://github.com/sabnzbd/sabnzbd.git \
 && apk del $buildDeps \
 && rm -rf \
     /var/cache/apk/* \
-    /par2cmdline \
-    /yenc \
     /sabnzbd/.git \
     /tmp/*
 
